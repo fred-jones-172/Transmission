@@ -1,0 +1,28 @@
+ ##To block failed login attempts use the below jail. 
+ [apache] 
+ enabled = true 
+ port = http,https 
+ filter = apache-auth 
+ logpath = /var/log/apache2/*error.log 
+ maxretry = 3 
+ bantime = 1200
+
+ ##To block the failed login attempts on the SSH server, use the below jail. 
+ [ssh] 
+ enabled = true 
+ port = ssh
+ filter = sshd
+ logpath = /var/log/auth.log 
+ maxretry = 3
+ bantime = 1200
+
+##To block repet affenders
+[blacklist]
+enabled = true
+port = 0:65535
+logpath  = /var/log/fail2ban.*
+filter = blacklist
+banaction = blacklist
+bantime  = 157680000    ; 2 year
+findtime = 157680000    ; 2 year
+maxretry = 10
